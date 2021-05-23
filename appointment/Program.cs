@@ -28,8 +28,8 @@ namespace appointment
                 try
                 {
                     // Create a request for the URL. 		
-                    WebRequest request = WebRequest.Create("https://online.mfa.gov.ua/api/v1/queue/consulates/97/schedule?date=2021-05-19&dateEnd=2021-05-19&serviceId=840");
-                    //WebRequest request = WebRequest.Create("https://online.mfa.gov.ua/api/v1/queue/consulates/6/schedule?date=2021-05-19&dateEnd=2021-05-19&serviceId=91");
+                    //WebRequest request = WebRequest.Create("https://online.mfa.gov.ua/api/v1/queue/consulates/97/schedule?date=2021-05-19&dateEnd=2021-05-19&serviceId=840");
+                    WebRequest request = WebRequest.Create("https://online.mfa.gov.ua/api/v1/queue/consulates/6/schedule?date=2021-05-19&dateEnd=2021-05-19&serviceId=91");
                     // If required by the server, set the credentials.
                     request.Credentials = CredentialCache.DefaultCredentials;
                     // Get the response.
@@ -113,16 +113,21 @@ namespace appointment
 
                         // Find your Account SID and Auth Token at twilio.com/console
                         // and set the environment variables. See http://twil.io/secure
-                        string accountSid = Environment.GetEnvironmentVariable("ACdb4dc0e6c34ef63c664414a6807a6a54");
-                        string authToken = Environment.GetEnvironmentVariable("e7a9534a7a6ac0aff9add741e47e0a2b");
+                        string accountSid = "ACdb4dc0e6c34ef63c664414a6807a6a54";
+                        string authToken = "e7a9534a7a6ac0aff9add741e47e0a2b";
 
                         TwilioClient.Init(accountSid, authToken);
 
                         var message2 = MessageResource.Create(
-                            body: "This is the ship that made the Kessel Run in fourteen parsecs?",
+                             body: "This is the ship that made the Kessel Run in fourteen parsecs?",
+                             from: new Twilio.Types.PhoneNumber("+13169999690"),
+                             to: new Twilio.Types.PhoneNumber("+972524745607")
+                         );
+
+                        var call = CallResource.Create(
                             from: new Twilio.Types.PhoneNumber("+13169999690"),
-                            to: new Twilio.Types.PhoneNumber("+972524745607")
-                        );
+                            to: new Twilio.Types.PhoneNumber("+972524745607"),
+                         url: new Uri("http://demo.twilio.com/docs/voice.xml"));
                     }
                     else
                     {
@@ -141,7 +146,7 @@ namespace appointment
                     Console.WriteLine(ex.Message);
                 }
 
-                Thread.Sleep(30000);
+                Thread.Sleep(60000);
             }
            
         }
